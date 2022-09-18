@@ -16,5 +16,19 @@ select trim(leading 'r' from 'radar');
 select trim(trailing 'r' from 'radar');  
 
 `rada`
+
+
+select split_part('USA/DC/202', '/', 2); 
+
+`DC`
+
+select substring('USA/DC/202', 5, 2); 
+
+`DC`
+
+select substring('USA/DC/202' from 5 for 2); 
+
+`DC`
+
 ```
 
