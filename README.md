@@ -1,5 +1,6 @@
 # Combining-and-Filtering-Data-with-PostgreSQL-9
 
+# Working with String functions
 ```sql
 select trim(' radar '); 
 
@@ -86,5 +87,29 @@ NK          |Spirit Air Lines  |Spirit A       |
 UA          |United Air Lines  |United A       |
 VX          |Virgin America    |Virgin A       |
 WN          |Southwest Airlines|Southwes       |
+
+
+select carrier_code ,
+		carrier_desc ,
+		upper(replace (substring(carrier_desc, 1, 8), ' ','')) as carrier_display 
+from codes_carrier cc ;
+
+carrier_code|carrier_desc      |carrier_display|
+------------+------------------+---------------+
+AA          |American Airlines |AMERICAN       |
+AS          |Alaska Airlines   |ALASKAA        |
+B6          |JetBlue Airways   |JETBLUE        |
+DL          |Delta Air Lines   |DELTAAI        |
+F9          |Frontier Airlines |FRONTIER       |
+G4          |Allegiant Air     |ALLEGIAN       |
+HA          |Hawaiian Airlines |HAWAIIAN       |
+NK          |Spirit Air Lines  |SPIRITA        |
+UA          |United Air Lines  |UNITEDA        |
+VX          |Virgin America    |VIRGINA        |
+WN          |Southwest Airlines|SOUTHWES       |
+
 ```
+--------
+
+# Aggregating Function
 
