@@ -1,6 +1,7 @@
 # Combining-and-Filtering-Data-with-PostgreSQL-9
 
 # Working with String functions
+
 ```sql
 select trim(' radar '); 
 
@@ -113,3 +114,26 @@ WN          |Southwest Airlines|SOUTHWES       |
 
 # Aggregating Function
 
+```sql
+select 2+2;
+
+select 12/2;
+
+select 13/2;
+
+select 13/2::float;
+
+select 15%2;
+
+select 12 ^ 2;
+
+select |/36;
+
+select @ (36-40);
+
+select abs(36-40); 
+```
+
+```
+
+```
