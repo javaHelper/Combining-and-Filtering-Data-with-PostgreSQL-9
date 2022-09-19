@@ -135,5 +135,71 @@ select abs(36-40);
 ```
 
 ```
+----
+
+# Aggregate Functions in Action
+
+```sql
+select avg(dep_delay_new) 
+from performance p  ;
+
+select 	mkt_carrier ,
+		avg(dep_delay_new) 
+from performance p  
+group by mkt_carrier ;
+mkt_carrier|avg                |
+-----------+-------------------+
+AA         |12.6209875916668781|
+AS         | 6.0100193355598523|
+B6         |24.1109308283518360|
+DL         |15.6977092251380359|
+F9         |19.6507352941176471|
+G4         |14.5763313609467456|
+HA         | 5.3746002132196162|
+NK         |10.3558917197452229|
+UA         |14.7194754109927327|
+VX         | 8.1761621810555750|
+WN         | 9.9191719507646401|
+
+
+select 	p.mkt_carrier ,
+		avg(p.dep_delay_new) 
+from performance p  
+inner join codes_carrier cc 
+	on p.mkt_carrier  = cc.carrier_code 
+group by p.mkt_carrier ;
+mkt_carrier|avg                |
+-----------+-------------------+
+AA         |12.6209875916668781|
+AS         | 6.0100193355598523|
+B6         |24.1109308283518360|
+DL         |15.6977092251380359|
+F9         |19.6507352941176471|
+G4         |14.5763313609467456|
+HA         | 5.3746002132196162|
+NK         |10.3558917197452229|
+UA         |14.7194754109927327|
+VX         | 8.1761621810555750|
+WN         | 9.9191719507646401|
+
+select 	p.mkt_carrier ,
+		avg(p.dep_delay_new) 
+from performance p  
+inner join codes_carrier cc 
+	on p.mkt_carrier  = cc.carrier_code 
+group by p.mkt_carrier, cc.carrier_desc  ;
+mkt_carrier|avg                |
+-----------+-------------------+
+AA         |12.6209875916668781|
+AS         | 6.0100193355598523|
+B6         |24.1109308283518360|
+DL         |15.6977092251380359|
+F9         |19.6507352941176471|
+G4         |14.5763313609467456|
+HA         | 5.3746002132196162|
+NK         |10.3558917197452229|
+UA         |14.7194754109927327|
+VX         | 8.1761621810555750|
+WN         | 9.9191719507646401|
 
 ```
