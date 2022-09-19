@@ -320,5 +320,13 @@ left  join codes_cancellation ca
 # Set Theory
 
 ```sql
-
+select 	*
+from performance p  
+where origin = 'BIL'
+	and dest = 'SEA'
+	and fl_date = '2018-01-01';
+fl_date   |mkt_carrier|mkt_carrier_fl_num|origin|origin_city_name|origin_state_abr|dest|dest_city_name|dest_state_abr|dep_delay_new|arr_delay_new|cancelled|cancellation_code|diverted|carrier_delay|weather_delay|nas_delay|security_delay|late_aircraft_delay|
+----------+-----------+------------------+------+----------------+----------------+----+--------------+--------------+-------------+-------------+---------+-----------------+--------+-------------+-------------+---------+--------------+-------------------+
+2018-01-01|AS         |2423              |BIL   |Billings, MT    |MT              |SEA |Seattle, WA   |WA            |           22|            0|        0|                 |       0|             |             |         |              |                   |
+2018-01-01|AS         |2433              |BIL   |Billings, MT    |MT              |SEA |Seattle, WA   |WA            |            2|            0|        0|                 |       0|             |             |         |              |                   |
 ```
