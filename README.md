@@ -329,4 +329,99 @@ fl_date   |mkt_carrier|mkt_carrier_fl_num|origin|origin_city_name|origin_state_a
 ----------+-----------+------------------+------+----------------+----------------+----+--------------+--------------+-------------+-------------+---------+-----------------+--------+-------------+-------------+---------+--------------+-------------------+
 2018-01-01|AS         |2423              |BIL   |Billings, MT    |MT              |SEA |Seattle, WA   |WA            |           22|            0|        0|                 |       0|             |             |         |              |                   |
 2018-01-01|AS         |2433              |BIL   |Billings, MT    |MT              |SEA |Seattle, WA   |WA            |            2|            0|        0|                 |       0|             |             |         |              |                   |
+
+
+select 	*
+from performance p  
+where origin = 'BIL'
+	and dest = 'SEA'
+	and fl_date = '2018-01-01'
+union
+select * 
+from performance p 
+where origin = 'BZN'
+	and dest = 'SEA'
+	and fl_date = '2018-01-01';
+```
+
+----
+
+# SubQueries
+
+
+```sql
+select fl_date ,
+		mkt_carrier || ' '||mkt_carrier_fl_num as flight,
+		origin ,
+		dest 
+from performance p 
+where cancelled =1;
+
+
+select fl_date ,
+		mkt_carrier || ' '||mkt_carrier_fl_num as flight,
+		origin ,
+		dest 
+from performance p 
+where cancelled =1
+and cancellation_code in (select cancellation_code 
+						 from codes_cancellation cc
+						 where cancel_desc= 'Weather');
+						 
+						 
+
+select p.fl_date ,
+		p.mkt_carrier ,
+		p.mkt_carrier_fl_num ,
+		p.origin ,
+		p.dest ,
+		p.dep_delay_new 
+from performance p 
+where p.fl_date = '2018-01-02'
+	and p.mkt_carrier = 'UA'
+	and p.origin = 'DEN'
+	and p.dest in ('ORD','SFO')
+	and p.dep_delay_new > (select avg(p2.dep_delay_new) 
+							from performance p2
+							where dep_delay_new > 0
+							and p.origin = p2.origin
+							and p.dest = p2.dest
+							and p.mkt_carrier = p2.mkt_carrier);
+fl_date   |mkt_carrier|mkt_carrier_fl_num|origin|dest|dep_delay_new|
+----------+-----------+------------------+------+----+-------------+
+2018-01-02|UA         |2031              |DEN   |SFO |          208|
+2018-01-02|UA         |478               |DEN   |ORD |           34|
+
+
+select p.dest ,
+		avg( p.dep_delay_new )
+from performance p 
+where p.fl_date = '2018-01-02'
+	and p.mkt_carrier = 'UA'
+	and p.origin = 'DEN'
+	and p.dest in ('ORD','SFO')
+group by dest ;
+dest|avg                |
+----+-------------------+
+ORD | 3.4545454545454545|
+SFO |30.4545454545454545|
+```
+---------
+
+# Queries with common table expression
+
+```sql
+select p.fl_date ,
+		p.mkt_carrier ,
+		p.mkt_carrier_fl_num ,
+		p.origin ,
+		p.dest ,
+		p.dep_delay_new 
+from performance p 
+inner join delays b
+where p.fl_date = '2018-01-02'
+	and p.mkt_carrier = 'UA'
+	and p.origin = 'DEN'
+	and p.dest in ('ORD','SFO')
+	and p.dep_delay_new > b.avg_dep_delay);
 ```
