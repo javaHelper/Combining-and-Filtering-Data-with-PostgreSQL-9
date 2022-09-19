@@ -133,8 +133,6 @@ select @ (36-40);
 
 select abs(36-40); 
 ```
-
-```
 ----
 
 # Aggregate Functions in Action
@@ -273,5 +271,54 @@ WN         |Southwest Airlines| 9.9191719507646401| 8.4052680264989769|
 NK         |Spirit Air Lines  |10.3558917197452229|10.6143198782520472|
 UA         |United Air Lines  |14.7194754109927327|15.0360204921296419|
 VX         |Virgin America    | 8.1761621810555750| 8.9830271216097988|
+
+```
+------
+
+# Filtering Aggregate Functions
+
+```sql
+select 	p.mkt_carrier ,
+		cc.carrier_desc ,
+		avg(p.dep_delay_new) as departure_delay,
+		avg(p.arr_delay_new) as arrival_delay 
+from performance p  
+inner join codes_carrier cc 
+	on p.mkt_carrier  = cc.carrier_code 
+group by p.mkt_carrier, 
+		cc.carrier_desc  
+having  avg(p.dep_delay_new) > 15
+		and avg(p.arr_delay_new) > 15;
+		
+mkt_carrier|carrier_desc     |departure_delay    |arrival_delay      |
+-----------+-----------------+-------------------+-------------------+
+B6         |JetBlue Airways  |24.1109308283518360|23.7532361765966567|
+F9         |Frontier Airlines|19.6507352941176471|18.7577574418849269|		
+```
+-------
+
+# Joins
+
+```sql
+select 	p.fl_date ,
+		p.mkt_carrier ,
+		cc.carrier_desc as airline,
+		p.mkt_carrier_fl_num as flight,
+		p.origin_city_name ,
+		p.dest_city_name ,
+		p.cancellation_code ,
+		ca.cancel_desc 
+from performance p  
+inner join codes_carrier cc 
+	on p.mkt_carrier  = cc.carrier_code 
+left  join codes_cancellation ca
+	on p.cancellation_code = ca.cancellation_code ;
+```
+
+------
+
+# Set Theory
+
+```sql
 
 ```
