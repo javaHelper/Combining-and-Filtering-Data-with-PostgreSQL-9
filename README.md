@@ -202,4 +202,76 @@ UA         |14.7194754109927327|
 VX         | 8.1761621810555750|
 WN         | 9.9191719507646401|
 
+
+select 	p.mkt_carrier ,
+		avg(p.dep_delay_new) 
+from performance p  
+inner join codes_carrier cc 
+	on p.mkt_carrier  = cc.carrier_code 
+group by p.mkt_carrier, 
+		cc.carrier_desc  
+order by avg(p.dep_delay_new) ;
+mkt_carrier|avg                |
+-----------+-------------------+
+HA         | 5.3746002132196162|
+AS         | 6.0100193355598523|
+VX         | 8.1761621810555750|
+WN         | 9.9191719507646401|
+NK         |10.3558917197452229|
+AA         |12.6209875916668781|
+G4         |14.5763313609467456|
+UA         |14.7194754109927327|
+DL         |15.6977092251380359|
+F9         |19.6507352941176471|
+B6         |24.1109308283518360|
+
+
+select 	p.mkt_carrier ,
+		cc.carrier_desc ,
+		avg(p.dep_delay_new) 
+from performance p  
+inner join codes_carrier cc 
+	on p.mkt_carrier  = cc.carrier_code 
+group by p.mkt_carrier, 
+		cc.carrier_desc  
+order by avg(p.dep_delay_new) ;
+mkt_carrier|carrier_desc      |avg                |
+-----------+------------------+-------------------+
+HA         |Hawaiian Airlines | 5.3746002132196162|
+AS         |Alaska Airlines   | 6.0100193355598523|
+VX         |Virgin America    | 8.1761621810555750|
+WN         |Southwest Airlines| 9.9191719507646401|
+NK         |Spirit Air Lines  |10.3558917197452229|
+AA         |American Airlines |12.6209875916668781|
+G4         |Allegiant Air     |14.5763313609467456|
+UA         |United Air Lines  |14.7194754109927327|
+DL         |Delta Air Lines   |15.6977092251380359|
+F9         |Frontier Airlines |19.6507352941176471|
+B6         |JetBlue Airways   |24.1109308283518360|
+
+
+select 	p.mkt_carrier ,
+		cc.carrier_desc ,
+		avg(p.dep_delay_new) as departure_delay,
+		avg(p.arr_delay_new) as arrival_delay 
+from performance p  
+inner join codes_carrier cc 
+	on p.mkt_carrier  = cc.carrier_code 
+group by p.mkt_carrier, 
+		cc.carrier_desc  
+order by 2 ;
+mkt_carrier|carrier_desc      |departure_delay    |arrival_delay      |
+-----------+------------------+-------------------+-------------------+
+AS         |Alaska Airlines   | 6.0100193355598523| 6.5396359780880014|
+G4         |Allegiant Air     |14.5763313609467456|14.7267459138187221|
+AA         |American Airlines |12.6209875916668781|13.1136531412279809|
+DL         |Delta Air Lines   |15.6977092251380359|14.9632170882588076|
+F9         |Frontier Airlines |19.6507352941176471|18.7577574418849269|
+HA         |Hawaiian Airlines | 5.3746002132196162| 6.2211358156978302|
+B6         |JetBlue Airways   |24.1109308283518360|23.7532361765966567|
+WN         |Southwest Airlines| 9.9191719507646401| 8.4052680264989769|
+NK         |Spirit Air Lines  |10.3558917197452229|10.6143198782520472|
+UA         |United Air Lines  |14.7194754109927327|15.0360204921296419|
+VX         |Virgin America    | 8.1761621810555750| 8.9830271216097988|
+
 ```
